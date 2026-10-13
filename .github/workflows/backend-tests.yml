@@ -39,4 +39,18 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m pytest -v --cov=app --cov-report=term-missing
+          python -m pytest -v --cov=app \
+                    --junitxml=test-results.xml \
+                    --cov=app \
+                    --cov-report=term-missing \
+                    --cov-report=html:htmlcov
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+            name: statefy-test-reports
+            path: |
+                backend/test-results.xml
+                backend/htmlcov/
+            if-no-files-found: warn

@@ -40,10 +40,12 @@ jobs:
       - name: Run tests
         run: |
           python -m pytest -v --cov=app \
-                    --junitxml=test-results.xml \
-                    --cov=app \
-                    --cov-report=term-missing \
-                    --cov-report=html:htmlcov
+            --junitxml=test-results.xml \
+            --html=test-report.html \
+            --self-contained-html \
+            --cov=app \
+            --cov-report=term-missing \
+            --cov-report=html:htmlcov
 
       - name: Upload test reports
         if: always()
@@ -52,5 +54,7 @@ jobs:
             name: statefy-test-reports
             path: |
                 backend/test-results.xml
+                backend/test-report.html
                 backend/htmlcov/
+    
             if-no-files-found: warn

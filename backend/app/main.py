@@ -2,7 +2,9 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import os
+from app.api import health, resources
 
+API_VERSION = "v1"
 IS_PROD = os.getenv("ENV") == "production"
 
 app = FastAPI(
@@ -14,21 +16,8 @@ app = FastAPI(
     openapi_url=None if IS_PROD else "/openapi.json"
 )
 
-class HealthResponse(BaseModel):
-    status: str
-    service: str
-    version: str
-
-
-@app.get("/health", response_model=HealthResponse)
-async def health() -> HealthResponse:
-    return HealthResponse(
-        status="healthy",
-        service="stateops",
-        version="0.1.0",
-    )
-
-
-@app.get("/api/v1/resources")
-async def list_resources():
-    return {"resources": []}
+app.include_router(health.router)
+app.include_router(
+    resources.router,
+    prefix=f"/api/{API_VERSION}"
+)

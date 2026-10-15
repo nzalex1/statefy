@@ -62,4 +62,4 @@ GitHub Actions runs the test suite on pushes and pull requests and uploads test 
 
 ## License
 
-License information will be added as the project evolves.
+MIT

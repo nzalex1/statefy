@@ -1,1 +1,5 @@
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+# you might use 
+# python -m pip install truststore 
+# to point to windows cert store if behind company webproxy
+
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt -vvv
